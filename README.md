@@ -29,7 +29,7 @@ Use this reference when discussing:
 ---
 
 ## 📘 Reference Document: PostgreSQL CRUD Basics & SELECT Exercises
-[▶️ **View Document**]((https://github.com/renece153/postgres_tutorial_complete/blob/main/documents/CRUD%20Basics%20and%20SELECT%20Exercise.pdf))
+[▶️ **View Document**](https://github.com/renece153/postgres_tutorial_complete/blob/main/documents/CRUD%20Basics%20and%20SELECT%20Exercise.pdf)
 
 **Source:** Internal course material  
 **Filename:** `CRUD Basics and SELECT Exercise.pdf`  
