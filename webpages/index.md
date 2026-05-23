@@ -41,8 +41,8 @@ PostgreSQL allows multiple databases inside the same server instance. Each conne
 psql -U postgres -d class_db
 ```
 
-- ```-U``` specifies the user
-- ```-d``` specifies the database
+- `-U` specifies the user
+- `-d` specifies the database
 
 ## 3. Creating Your First Table
 
@@ -70,5 +70,44 @@ CREATE TABLE users (
 
 This matches the example structure you used earlier in your CRUD handout.
 
+## 4. PostgreSQL Backend File Structure
 
+PostgreSQL stores data inside the data directory (PGDATA).
 
+```
+PGDATA/
+│
+├── base/          # One folder per database
+├── global/        # Cluster-wide metadata
+├── pg_wal/        # Write-Ahead Logs (durability)
+├── pg_multixact/  # MVCC lock tracking
+├── pg_tblspc/     # Tablespace links
+└── postgresql.conf
+```
+
+**How a table becomes files**
+- Each table = one or more files inside base/<db_oid>/
+- Indexes = separate files
+- Large rows = TOAST files
+
+## 5. Quick Reference Commands
+
+**List databases**
+```sql
+\l
+```
+
+**Switch database**
+```sql
+\c class_db
+```
+
+**List tables**
+```sql
+\dt
+```
+
+**Describe table**
+```sql
+\d users
+```
