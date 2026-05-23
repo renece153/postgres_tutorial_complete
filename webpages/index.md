@@ -53,7 +53,7 @@ By default, PostgreSQL uses the public schema unless you specify otherwise.
 2. Right‑click Tables → Create → Table.
 3. Name the table (e.g., users).
 4. Add columns:
-   - - id → SERIAL → Primary Key
-   - - name → VARCHAR(255)
-   - - age → INT
-   - - email → TEXT (Unique)
+   - id → SERIAL → Primary Key
+   - name → VARCHAR(255)
+   - age → INT
+   - email → TEXT (Unique)
