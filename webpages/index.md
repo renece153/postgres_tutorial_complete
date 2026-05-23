@@ -57,3 +57,18 @@ By default, PostgreSQL uses the public schema unless you specify otherwise.
    - name → VARCHAR(255)
    - age → INT
    - email → TEXT (Unique)
+
+**Creating the Same Table via SQL **
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    age INT,
+    email TEXT UNIQUE
+);
+```
+
+This matches the example structure you used earlier in your CRUD handout.
+
+
+
