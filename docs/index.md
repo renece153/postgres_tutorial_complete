@@ -61,4 +61,4 @@ Use this reference when discussing:
 
 ## 🔗 Navigation
 
- [Next → (Users)](docs/page2.md)
+ [Next → (Users)](page2.md)
