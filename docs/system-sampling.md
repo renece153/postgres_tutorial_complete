@@ -71,3 +71,83 @@ ERROR: Cannot borrow more than remaining quantity (7).
 ```
 This confirms the procedure is working.
 
+## 🧩 Part 10 — Borrow/Return Sample Data
+Now we will simulate a full borrow/return cycle.
+### 📦 10.1 — Borrow Items
+Borrow 2 more units:
+```sql
+SELECT safe_insert_borrowed_item(
+    p_inventory_id := '<your-inventory-uuid>',
+    p_user_id := 2,
+    p_quantity := 2
+);
+```
+Borrow 1 more unit:
+```sql
+SELECT safe_insert_borrowed_item(
+    p_inventory_id := '<your-inventory-uuid>',
+    p_user_id := 3,
+    p_quantity := 1
+);
+```
+Check availability:
+```sql
+SELECT * FROM inventory_availability;
+```
+
+Expected:
+- Total borrowed = 3 + 2 + 1 = 6
+- Remaining = 10 − 6 = 4
+
+### 🔄 10.2 — Return Items
+Return 1 unit from the first borrow:
+```sql
+SELECT safe_insert_returned_item(
+    p_borrow_id := 'BUR-00001',
+    p_inventory_id := '<your-inventory-uuid>',
+    p_user_id := 1,
+    p_quantity := 1
+);
+```
+Check availability:
+```sql
+SELECT * FROM inventory_availability;
+```
+
+Expected:
+- Remaining = 10 − 6 + 1 = 5
+- Latest transaction = `Returned`
+
+### ❌ 10.3 — Test Over‑Returning (Should Fail)
+```sql
+SELECT safe_insert_returned_item(
+    p_borrow_id := 'BUR-00001',
+    p_inventory_id := '<your-inventory-uuid>',
+    p_user_id := 1,
+    p_quantity := 10
+);
+```
+
+Expected error:
+```
+ERROR: Cannot return more than borrowed.
+```
+
+### 📊 10.4 — Verify All Tables
+Borrowed records:
+```sql
+SELECT * FROM borrowed;
+```
+Returned records:
+```sql
+SELECT * FROM returned;
+```
+
+Availability view:
+```sql
+SELECT * FROM inventory_availability;
+```
+Everything should now reflect:
+- Correct remaining quantity
+- Correct latest transaction
+- Correct totals
