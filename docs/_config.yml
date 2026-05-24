@@ -1,6 +1,6 @@
 title: Postgres Tutorial
 description: Postgres Tutorial
-baseurl: "" 
+baseurl: "/postgres-tutorial"
 url: "https://renece153.github.io"
 remote_theme: pages-themes/primer@v0.6.0
 
