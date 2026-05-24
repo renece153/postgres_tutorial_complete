@@ -1,5 +1,3 @@
-```md
-
 # PostgreSQL Introduction  
 ### Creating Databases, Connecting, Creating Tables, and Understanding Backend File Structure
 
@@ -112,5 +110,4 @@ PGDATA/
 **Describe table**
 ```sql
 \d users
-```
 ```
