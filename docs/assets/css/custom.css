@@ -1,0 +1,37 @@
+.tab-nav {
+  margin: 1.5rem 0;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.tab-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tab-item {
+  margin: 0;
+}
+
+.tab-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 6px 6px 0 0;
+  text-decoration: none;
+  color: #24292f;
+  background-color: #f6f8fa;
+  font-weight: 500;
+}
+
+.tab-link:hover {
+  background-color: #eaeef2;
+}
+
+.tab-link.active {
+  border-color: #d0d7de;
+  border-bottom-color: #ffffff;
+  background-color: #ffffff;
+}
