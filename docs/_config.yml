@@ -1,0 +1,28 @@
+title: Sample Works
+description: Portfolio of Rey Torrecampo
+baseurl: "" # Leave blank if deploying to root of GitHub Pages
+url: "https://renece153.github.io"
+remote_theme: pages-themes/primer@v0.6.0
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+
+# Author info
+author:
+  name: Rey Torrecampo
+  email: rentorrecampoece153@gmail.com
+
+# Social links
+social:
+  linkedin: https://www.linkedin.com/in/rey-lawrence-torrecampo-ece/
+  github: https://github.com/renece153
+  website: https://renece153.github.io/portfolio/
+
+# Navigation (optional)
+nav:
+  - title: Home
+    url: /

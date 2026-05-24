@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Optional: Link to a CSS file -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <main>
+    {{ content }}
+  </main>
+
+  <footer>
+  <h2>📫 Connect with Me</h2>
+  <ul>
+    <li>💼 <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener">LinkedIn</a></li>
+    <li>🌐 <a href="{{ site.social.website }}" target="_blank" rel="noopener">Personal Site</a></li>
+    <li>📧 <a href="mailto:{{ site.author.email }}">Email</a></li>
+  </ul>
+  <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}</p>
+</footer>
+</body>
+</html>
