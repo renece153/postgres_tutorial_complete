@@ -27,7 +27,7 @@ SELECT * FROM inventory
 
 ### 🔍 9.2 — Check Initial Availability
 
-``sql
+```sql
 SELECT * FROM inventory_availability;
 ```
 
@@ -38,7 +38,7 @@ Expected:
 ### 🔍 9.3 — Test Borrow Procedure
 
 Borrow 3 units:
-``sql
+```sql
 SELECT safe_insert_borrowed_item(
     p_inventory_id := '<your-inventory-uuid>',
     p_user_id := 1,
@@ -48,7 +48,7 @@ SELECT safe_insert_borrowed_item(
 Replace `<your-inventory-uuid>` with the actual UUID from the inventory table.
 
 **Check availability again:**
-``sql
+```sql
 SELECT * FROM inventory_availability;
 ```
 Expected:
@@ -57,7 +57,7 @@ Expected:
 
 ### 🔍 9.4 — Test Over‑Borrowing (Should Fail)
 **Check availability again:**
-``sql
+```sql
 SELECT safe_insert_borrowed_item(
     p_inventory_id := '<your-inventory-uuid>',
     p_user_id := 1,
