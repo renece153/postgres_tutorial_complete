@@ -1,9 +1,3 @@
----
-layout: default
-title: Reference — RDBMS & PostgreSQL
-permalink: /reference/rdbms/
----
-
 ## 📘 Reference Document: *Relational Databases & Why We Use PostgreSQL*
 **Source:** Internal course material  
 **Filename:** `RDBMS and Why We will Use Postgres`  
