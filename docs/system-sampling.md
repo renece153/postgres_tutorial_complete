@@ -15,13 +15,13 @@ Now that the stored procedures are created, we will test them to ensure:
 
 The inventory_availability view updates automatically
 
-``sql
+```sql
 INSERT INTO inventory (name, quantity)
 VALUES ('Database Systems Book', 10);
 ```
 
 Verify:
-``sql
+```sql
 SELECT * FROM inventory
 ```
 
