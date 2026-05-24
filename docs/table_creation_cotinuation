@@ -1,112 +1,60 @@
-# PostgreSQL Cotinuation 
-### Adding Data and Sttructure to the database.
+## 📘 Part 2 — Inserting Data Into PostgreSQL
+In this section, we will insert sample data into the users table and then continue building our database by creating additional tables.
+These steps should be executed inside PostgreSQL while following along with the reference document.
 
+### 🧩 Step 6 — Insert 5 Rows Into users
+We begin by inserting one row:
 
+```sql
+INSERT INTO users (name, email, age)
+VALUES ('Brian Griffin', 'brian@gmail.com', 62);
+```
+
+**Next, insert four more rows:**
+```sql
+INSERT INTO users (name, email, age)
+VALUES 
+('Kevin Mccoy', 'kevin@gmail.com', 35),
+('John Doe', 'john.doe@gmail.com', 23),
+('Michael Jackson', 'michael.jackson@gmail.com', 76),
+('Lebron James Cruz', 'lebron_cruz@gmail.com', 41);
+```
+
+**Verify the inserted data:**
+```sql
+SELECT * FROM users;
+```
 ---
+### 🧩 Next — Creating Another Table
+After inserting users, we continue building the system by creating additional tables.
+These tables will be used later for borrowing and returning items.
 
-## 1. Inserting Row in the Table
-
-Creating a database is the first step in organizing your work. In PostgreSQL, a **database** is the top‑level container that holds schemas, tables, and all related objects.
-
-> “The Database acts as the top‑level container, holding all data and metadata.”
-
-### Using SQL Editor
-
-1. In the same SQL Editor, paste this query  
-2. In the left tree, right‑click **Databases → Create → Database**.  
-3. Enter a name (e.g., `class_db`).  
-4. Leave the owner as **postgres** unless you’ve created additional roles.  
-5. Click **Save**.
-
-### Creating a Database via SQL
-
+**Borrowed Table**
 ```sql
-CREATE DATABASE class_db;
-```
-
-## 2. Connecting to Databases
-
-PostgreSQL allows multiple databases inside the same server instance. Each connection targets exactly one database at a time.
-
-### Connecting in pgAdmin
-
-1. Expand the server.
-2. Double‑click the database you created.
-3. pgAdmin will open a new connection tab for that database.
-
-### Connecting via psql (CLI)
-
-```bash
-psql -U postgres -d class_db
-```
-
-- `-U` specifies the user
-- `-d` specifies the database
-
-## 3. Creating Your First Table
-
-Your earlier chapter explains that schemas are _“logical containers for tables, views, functions”_ .
-By default, PostgreSQL uses the public schema unless you specify otherwise.
-
-1. Expand your database → Schemas → public → Tables.
-2. Right‑click Tables → Create → Table.
-3. Name the table (e.g., users).
-4. Add columns:
-   - id → SERIAL → Primary Key
-   - name → VARCHAR(255)
-   - age → INT
-   - email → TEXT (Unique)
-
-** Creating the Same Table via SQL **
-```sql
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    age INT,
-    email TEXT UNIQUE
+CREATE TABLE borrowed (
+    borrow_id TEXT PRIMARY KEY,
+    inventory_id UUID REFERENCES inventory(id) ON DELETE CASCADE,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    transaction_date TIMESTAMPTZ DEFAULT NOW(),
+    quantity INT NOT NULL
 );
 ```
 
-This matches the example structure you used earlier in your CRUD handout.
-
-## 4. PostgreSQL Backend File Structure
-
-PostgreSQL stores data inside the data directory (PGDATA).
-
-```
-PGDATA/
-│
-├── base/          # One folder per database
-├── global/        # Cluster-wide metadata
-├── pg_wal/        # Write-Ahead Logs (durability)
-├── pg_multixact/  # MVCC lock tracking
-├── pg_tblspc/     # Tablespace links
-└── postgresql.conf
-```
-
-**How a table becomes files**
-- Each table = one or more files inside base/<db_oid>/
-- Indexes = separate files
-- Large rows = TOAST files
-
-## 5. Quick Reference Commands
-
-**List databases**
+**Returned Table**
 ```sql
-\l
+CREATE TABLE returned (
+    return_id TEXT PRIMARY KEY,
+    borrow_id TEXT REFERENCES borrowed(borrow_id) ON DELETE CASCADE,
+    inventory_id UUID REFERENCES inventory(id) ON DELETE CASCADE,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    return_date TIMESTAMPTZ DEFAULT NOW(),
+    quantity INT NOT NULL
+);
 ```
 
-**Switch database**
-```sql
-\c class_db
-```
+### 🧠 What You Should Observe
+- PostgreSQL supports multi‑row inserts
+- Foreign keys enforce relationships between tables
+- `borrowed` and `returned` tables depend on both users and inventory
+- These tables will later be used by your stored procedures and .NET MAUI app
 
-**List tables**
-```sql
-\dt
-```
-
-**Describe table**
-```sql
-\d users
-```
