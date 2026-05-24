@@ -58,8 +58,7 @@ By default, PostgreSQL uses the public schema unless you specify otherwise.
    - age → INT
    - email → TEXT (Unique)
 
-** Creating the Same Table via SQL **
-
+**Creating the Same Table via SQL**
 ```sql
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
