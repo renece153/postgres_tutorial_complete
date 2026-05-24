@@ -1,3 +1,9 @@
+---
+layout: default
+title: Introduction
+permalink: /
+---
+
 # 📘 Introduction
 Building a complete Borrow–Return Inventory System requires more than just writing SQL commands — it requires understanding how data flows, how constraints protect your system, and how each component works together to maintain accuracy. In this module, we take a practical, hands‑on approach to designing a real‑world PostgreSQL backend that supports a full application workflow.
 
