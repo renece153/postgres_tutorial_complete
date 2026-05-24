@@ -35,3 +35,13 @@
   border-bottom-color: #ffffff;
   background-color: #ffffff;
 }
+
+/* GitHub‑style Markdown formatting */
+.markdown-body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #c9d1d9;
+  background-color: #0d1117;
+  padding: 2rem;
+  border-radius: 6px;
+}
