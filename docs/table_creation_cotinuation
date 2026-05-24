@@ -1,19 +1,18 @@
-# PostgreSQL Introduction  
-### Creating Databases, Connecting, Creating Tables, and Understanding Backend File Structure
+# PostgreSQL Cotinuation 
+### Adding Data and Sttructure to the database.
 
-A student’s first real interaction with PostgreSQL begins the moment they create a database, connect to it, and define their first table. This section builds directly on the earlier concepts of relational structure — **Database → Schema → Database Objects** — which your Chapter 4.1 document explains as the universal hierarchy across relational systems.
 
 ---
 
-## 1. Creating a Database in PostgreSQL
+## 1. Inserting Row in the Table
 
 Creating a database is the first step in organizing your work. In PostgreSQL, a **database** is the top‑level container that holds schemas, tables, and all related objects.
 
 > “The Database acts as the top‑level container, holding all data and metadata.”
 
-### Creating a Database in pgAdmin (GUI)
+### Using SQL Editor
 
-1. Open **pgAdmin** and connect to your PostgreSQL server.  
+1. In the same SQL Editor, paste this query  
 2. In the left tree, right‑click **Databases → Create → Database**.  
 3. Enter a name (e.g., `class_db`).  
 4. Leave the owner as **postgres** unless you’ve created additional roles.  
