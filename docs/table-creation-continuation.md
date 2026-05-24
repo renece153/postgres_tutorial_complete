@@ -1,7 +1,7 @@
 ---
 layout: default
 title: More Table Creation and Inserting Data
-permalink: /table-cretion-continuation/
+permalink: /table-creation-continuation/
 ---
 
 ## 📘 Part 2 — Inserting Data Into PostgreSQL
