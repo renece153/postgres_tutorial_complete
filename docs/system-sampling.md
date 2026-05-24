@@ -1,3 +1,9 @@
+---
+layout: default
+title: Testing Stored Procedures
+permalink: /system-sampling/
+---
+
 ## 📘 Part 3 — Working With the Borrow/Return System
 In this section, students will:
 - Insert sample data into the borrowed and returned tables
