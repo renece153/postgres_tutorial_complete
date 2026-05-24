@@ -33,6 +33,6 @@ Use this reference when discussing:
 ## 📄 Embedded Document Viewer
 
 <iframe 
-  src="https://raw.githubusercontent.com/renece153/postgres_tutorial_complete/main/docs/documents/RDBMSandWhyWeWillUsePostgres.pdf"
+  src="https://drive.google.com/file/d/1dN86mW8CRWqIVTjEfoNPOqlRdj4LTfxk/preview"
   style="width:100%; height:90vh; border:none;"
 ></iframe>
