@@ -1,22 +1,17 @@
 <nav class="tab-nav">
   <ul class="tab-list">
-    <li class="tab-item">
-      <a href="{{ '/' | relative_url }}" class="tab-link {% if page.url == '/' %}active{% endif %}">Home</a>
-    </li>
-    <li class="tab-item">
-      <a href="{{ '/chapter4-1' | relative_url }}" class="tab-link {% if page.url == '/chapter4-1' %}active{% endif %}">
-        Chapter 4.1 — RDBMS
-      </a>
-    </li>
-    <li class="tab-item">
-      <a href="{{ '/postgres-intro' | relative_url }}" class="tab-link {% if page.url == '/postgres-intro' %}active{% endif %}">
-        PostgreSQL Introduction
-      </a>
-    </li>
-    <li class="tab-item">
-      <a href="{{ '/crud-basics' | relative_url }}" class="tab-link {% if page.url == '/crud-basics' %}active{% endif %}">
-        CRUD Basics
-      </a>
-    </li>
+    <li><a href="{{ '/' | relative_url }}" class="tab-link {% if page.url == '/' %}active{% endif %}">Home</a></li>
+
+    <li><a href="{{ '/chapter4-1' | relative_url }}" class="tab-link {% if page.url == '/chapter4-1' %}active{% endif %}">
+      Chapter 4.1 — RDBMS
+    </a></li>
+
+    <li><a href="{{ '/postgres-intro' | relative_url }}" class="tab-link {% if page.url == '/postgres-intro' %}active{% endif %}">
+      PostgreSQL Introduction
+    </a></li>
+
+    <li><a href="{{ '/crud-basics' | relative_url }}" class="tab-link {% if page.url == '/crud-basics' %}active{% endif %}">
+      CRUD Basics
+    </a></li>
   </ul>
 </nav>
