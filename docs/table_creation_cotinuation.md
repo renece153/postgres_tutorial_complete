@@ -58,3 +58,180 @@ CREATE TABLE returned (
 - `borrowed` and `returned` tables depend on both users and inventory
 - These tables will later be used by your stored procedures and .NET MAUI app
 
+## 🧩 Step 7 — Create the inventory_availability View
+This view calculates:
+- Total borrowed
+- Total returned
+- Remaining quantity
+- Latest transaction (Borrowed or Returned)
+```sql
+CREATE OR REPLACE VIEW inventory_availability AS
+WITH borrow_totals AS (
+    SELECT 
+        inventory_id,
+        COALESCE(SUM(quantity), 0) AS total_borrowed
+    FROM borrowed
+    GROUP BY inventory_id
+),
+return_totals AS (
+    SELECT 
+        inventory_id,
+        COALESCE(SUM(quantity), 0) AS total_returned
+    FROM returned
+    GROUP BY inventory_id
+),
+latest_activity AS (
+    SELECT 
+        inventory_id,
+        GREATEST(
+            COALESCE(MAX(transaction_date), '1900-01-01'),
+            COALESCE((SELECT MAX(return_date) FROM returned r2 WHERE r2.inventory_id = b.inventory_id), '1900-01-01')
+        ) AS latest_date,
+        CASE 
+            WHEN (SELECT MAX(transaction_date) FROM borrowed b2 WHERE b2.inventory_id = b.inventory_id) >=
+                 (SELECT MAX(return_date) FROM returned r2 WHERE r2.inventory_id = b.inventory_id)
+            THEN 'Borrowed'
+            ELSE 'Returned'
+        END AS latest_type
+    FROM borrowed b
+    GROUP BY inventory_id
+)
+SELECT 
+    i.id AS inventory_id,
+    i.name AS inventory_name,
+    i.quantity AS max_quantity,
+    (i.quantity 
+        - COALESCE(bt.total_borrowed, 0) 
+        + COALESCE(rt.total_returned, 0)
+    ) AS remaining_quantity,
+    la.latest_date AS latest_transaction_date,
+    la.latest_type AS latest_transaction_type
+FROM inventory i
+LEFT JOIN borrow_totals bt ON bt.inventory_id = i.id
+LEFT JOIN return_totals rt ON rt.inventory_id = i.id
+LEFT JOIN latest_activity la ON la.inventory_id = i.id;
+```
+
+---
+
+## 🧩 Step 8 — Create Stored Procedures
+These stored procedures enforce business rules:
+- No over‑borrowing
+- No over‑returning
+- Auto‑generate IDs (BUR-00001, RET-00001)
+
+### 🔒 Safe Borrow Procedure
+Prevents borrowing more than the remaining quantity.
+
+```sql
+CREATE OR REPLACE FUNCTION safe_insert_borrowed_item(
+    p_inventory_id UUID,
+    p_user_id BIGINT,
+    p_quantity INT
+)
+RETURNS TEXT
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    remaining INT;
+    last_id TEXT;
+    new_number INT;
+    new_id TEXT;
+BEGIN
+    -- Get remaining quantity from the view
+    SELECT remaining_quantity INTO remaining
+    FROM inventory_availability
+    WHERE inventory_id = p_inventory_id;
+
+    IF remaining IS NULL THEN
+        RAISE EXCEPTION 'Inventory item does not exist.';
+    END IF;
+
+    IF remaining <= 0 THEN
+        RAISE EXCEPTION 'No stock available to borrow.';
+    END IF;
+
+    IF p_quantity > remaining THEN
+        RAISE EXCEPTION 'Cannot borrow more than remaining quantity (%).', remaining;
+    END IF;
+
+    -- Generate BUR-00001 ID
+    SELECT borrow_id INTO last_id
+    FROM borrowed
+    ORDER BY borrow_id DESC
+    LIMIT 1;
+
+    IF last_id IS NULL THEN
+        new_number := 1;
+    ELSE
+        new_number := (regexp_replace(last_id, '\D', '', 'g'))::INT + 1;
+    END IF;
+
+    new_id := 'BUR-' || LPAD(new_number::TEXT, 5, '0');
+
+    INSERT INTO borrowed (borrow_id, inventory_id, user_id, quantity)
+    VALUES (new_id, p_inventory_id, p_user_id, p_quantity);
+
+    RETURN new_id;
+END;
+$$;
+```
+
+### 🔄 Safe Return Procedure
+Prevents returning more than what was borrowed.
+```sql
+CREATE OR REPLACE FUNCTION safe_insert_returned_item(
+    p_borrow_id TEXT,
+    p_inventory_id UUID,
+    p_user_id BIGINT,
+    p_quantity INT
+)
+RETURNS TEXT
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    last_id TEXT;
+    new_number INT;
+    new_id TEXT;
+    borrowed_qty INT;
+    returned_qty INT;
+BEGIN
+    -- Get total borrowed for this borrow_id
+    SELECT quantity INTO borrowed_qty
+    FROM borrowed
+    WHERE borrow_id = p_borrow_id;
+
+    IF borrowed_qty IS NULL THEN
+        RAISE EXCEPTION 'Borrow record does not exist.';
+    END IF;
+
+    -- Get total returned so far
+    SELECT COALESCE(SUM(quantity), 0) INTO returned_qty
+    FROM returned
+    WHERE borrow_id = p_borrow_id;
+
+    IF returned_qty + p_quantity > borrowed_qty THEN
+        RAISE EXCEPTION 'Cannot return more than borrowed.';
+    END IF;
+
+    -- Generate RET-00001 ID
+    SELECT return_id INTO last_id
+    FROM returned
+    ORDER BY return_id DESC
+    LIMIT 1;
+
+    IF last_id IS NULL THEN
+        new_number := 1;
+    ELSE
+        new_number := (regexp_replace(last_id, '\D', '', 'g'))::INT + 1;
+    END IF;
+
+    new_id := 'RET-' || LPAD(new_number::TEXT, 5, '0');
+
+    INSERT INTO returned (return_id, borrow_id, inventory_id, user_id, quantity)
+    VALUES (new_id, p_borrow_id, p_inventory_id, p_user_id, p_quantity);
+
+    RETURN new_id;
+END;
+$$;
+```
