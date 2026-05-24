@@ -1,3 +1,9 @@
+---
+layout: default
+title: More Table Creation and Inserting Data
+permalink: /table-cretion-continuation/
+---
+
 ## 📘 Part 2 — Inserting Data Into PostgreSQL
 In this section, we will insert sample data into the users table and then continue building our database by creating additional tables.
 These steps should be executed inside PostgreSQL while following along with the reference document.
