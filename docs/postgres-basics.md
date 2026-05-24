@@ -1,3 +1,9 @@
+---
+layout: default
+title: Postgres Introduction and Table Creation
+permalink: /postgres-basics/
+---
+
 # PostgreSQL Introduction  
 ### Creating Databases, Connecting, Creating Tables, and Understanding Backend File Structure
 
