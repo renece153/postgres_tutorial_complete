@@ -1,28 +1,31 @@
 title: Postgres Tutorial
 description: Postgres Tutorial
-baseurl: "" # Leave blank if deploying to root of GitHub Pages
+baseurl: "" 
 url: "https://renece153.github.io"
 remote_theme: pages-themes/primer@v0.6.0
 
-# Build settings
 markdown: kramdown
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-remote-theme
 
-# Author info
 author:
   name: Rey Torrecampo
   email: rentorrecampoece153@gmail.com
 
-# Social links
 social:
   linkedin: https://www.linkedin.com/in/rey-lawrence-torrecampo-ece/
   github: https://github.com/renece153
   website: https://renece153.github.io/portfolio/
 
-# Navigation (optional)
+# Navigation (manual)
 nav:
   - title: Home
     url: /
+  - title: Chapter 4.1 — RDBMS
+    url: /page2.md
+  - title: PostgreSQL Introduction
+    url: /postgres-intro
+  - title: CRUD Basics
+    url: /crud-basics
