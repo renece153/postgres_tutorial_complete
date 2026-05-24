@@ -1,4 +1,4 @@
-# 📘 Part 3 — Working With the Borrow/Return System
+## 📘 Part 3 — Working With the Borrow/Return System
 In this section, students will:
 - Insert sample data into the borrowed and returned tables
 - Observe how the `inventory_availability` view updates automatically
