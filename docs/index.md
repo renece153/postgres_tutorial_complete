@@ -1,6 +1,3 @@
-# 📘 Postgres Tutorial Complete
-
----
 ## 📘 Reference Document: *Relational Databases & Why We Use PostgreSQL*
 [▶️ **View Document**](https://github.com/renece153/postgres_tutorial_complete/blob/main/documents/RDBMS%20and%20Why%20We%20will%20Use%20Postgres.pdf)
 
@@ -56,9 +53,3 @@ Use this reference when discussing:
 - CSV import workflows  
 - SELECT filtering and aggregation  
 - Real‑world 
-
----
-
-## 🔗 Navigation
-
- [Next → (Users)](page2.md)
