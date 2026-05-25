@@ -35,6 +35,18 @@ SELECT * FROM users;
 After inserting users, we continue building the system by creating additional tables.
 These tables will be used later for borrowing and returning items.
 
+**Inventory Table (UUID Primary Key)**
+```sql
+create extension if not exists pgcrypto;
+
+create table inventory (
+    id uuid primary key default gen_random_uuid(),
+    name text,
+    quantity int,
+    created_at timestamptz default now()
+);
+```
+
 **Borrowed Table**
 ```sql
 CREATE TABLE borrowed (
